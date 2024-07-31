@@ -1,8 +1,6 @@
 import unittest
-import csv
-from io import StringIO
-from core.transaction_factories import CSVTransactionFactory, TransactionFactory
-from core.transaction import Transaction
+from core.transaction_factories import CSVTransactionFactory
+
 
 class TestCSVTransactionFactory(unittest.TestCase):
 
