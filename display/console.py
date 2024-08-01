@@ -28,6 +28,20 @@ def get_transaction_data(manual_input=True):
     return transactions
 
 
+def change_budget_amount(budget):
+    """Changes the budget amount and updates the budget object."""
+    new_amount = float(get_user_input("Enter new budget amount: "))
+    budget.current_balance = new_amount
+    display_budget(budget)
+
+
+def change_budget_duration(budget):
+    """Changes the budget duration and updates the budget object."""
+    new_days = int(get_user_input("Enter new budget duration in days: "))
+    budget.end_date = datetime.now() + timedelta(days=new_days)
+    display_budget(budget)
+
+
 def create_budget():
     """Creates a new budget based on user input."""
     current_balance = float(get_user_input("Enter current balance: "))
@@ -36,19 +50,17 @@ def create_budget():
 
     input_method = get_user_input("Enter data manually (m) or from CSV (c): ").lower()
     if input_method == 'm':
-        monthly_bills = get_transaction_data()
-        one_off_expenses = get_transaction_data()
+        transactions = get_transaction_data()
     else:
-        monthly_bills = get_transaction_data(manual_input=False)
-        one_off_expenses = get_transaction_data(manual_input=False)
+        transactions = get_transaction_data(manual_input=False)
 
-    budget = Budget(current_balance, end_date, monthly_bills, one_off_expenses)
+    budget = Budget(current_balance, end_date, transactions)
     return budget
 
 
 def display_budget(budget):
     """Displays the budget information."""
-    print(budget)
+    print(f"\n{budget}\n")
 
 
 def main():
@@ -62,6 +74,16 @@ def main():
             if n_choice == 'y':
                 # TODO: Implement saving the budget
                 print("Saving budget is not yet implemented.")
+            while True:
+                change_choice = get_user_input("\nChange budget duration (d)\nChange budget amount (a)\n\nContinue (y) ").lower()
+                if change_choice == 'd':
+                    change_budget_duration(budget)
+                elif change_choice == 'a':
+                    change_budget_amount(budget)
+                elif change_choice == 'y':
+                    break
+                else:
+                    print("Invalid choice.")
         elif choice == 'd':
             # TODO: Implement loading a saved budget
             print("Loading saved budget is not yet implemented.")
