@@ -4,7 +4,6 @@ from core.transaction import Transaction
 
 
 class TestTransaction(unittest.TestCase):
-
     @patch('requests.get')
     def test_convert_eur_to_gbp(self, mock_get):
         # Mock API response

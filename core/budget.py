@@ -4,12 +4,16 @@ from core.transaction import Transaction
 
 
 class Budget:
-    def __init__(self, current_balance, end_date: datetime, monthly_bills: list[Transaction],
-                 one_off_expenses: list[Transaction]):
+    def __init__(self, current_balance, end_date: datetime, transactions: list[Transaction]):
         self.current_balance = current_balance
         self.end_date = end_date
-        self.monthly_bills = monthly_bills
-        self.one_off_expenses = one_off_expenses
+        self.monthly_bills = list()
+        self.one_off_expenses = list()
+        for transaction in transactions:
+            if transaction.day is None:
+                self.one_off_expenses.append(transaction)
+            else:
+                self.monthly_bills.append(transaction)
 
     def calculate_total_monthly_bills(self) -> float:
         '''
@@ -44,8 +48,9 @@ class Budget:
 
     def __str__(self):
         return (f"Current balance: {self.current_balance}\n"
-                f"Total one-off expenses: {self.calculate_total_one_off_expenses()}\n"
-                f"Total monthly bills: {self.calculate_total_monthly_bills()}\n"
+                f"One-off expenses (total): {self.calculate_total_one_off_expenses()}\n"
+                f"Monthly bills (monthly): {sum(bill.amount for bill in self.monthly_bills)}\n"
+                f"Monthly bills (total): {self.calculate_total_monthly_bills()}\n"
                 f"Remaining balance: {self.calculate_remaining_balance()}\n"
                 f"Daily budget: {self.calculate_daily_budget()}")
 

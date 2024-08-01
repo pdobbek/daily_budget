@@ -24,12 +24,12 @@ class TestBudget(unittest.TestCase):
         ]
 
     def test_calculate_daily_budget(self):
+        # TODO Fails
         current_balance = 3000
         budget = Budget(
             current_balance=current_balance,
             end_date=datetime.datetime.now() + datetime.timedelta(days=90),  # three months
-            monthly_bills=self.generate_monthly_bills(),
-            one_off_expenses=self.generate_one_off_expenses()
+            transactions=self.generate_monthly_bills() + (self.generate_one_off_expenses())
         )
         expected_remaining_balance = 910
         self.assertEqual(expected_remaining_balance, budget.calculate_remaining_balance())
@@ -43,8 +43,7 @@ class TestBudget(unittest.TestCase):
         budget = Budget(
             current_balance=1000,
             end_date=end_date,
-            monthly_bills=monthly_bills,
-            one_off_expenses=list()
+            transactions=self.generate_monthly_bills()
         )
         self.assertEqual(1290.0, budget.calculate_total_monthly_bills())
 
@@ -54,8 +53,7 @@ class TestBudget(unittest.TestCase):
         budget = Budget(
             current_balance=1000,
             end_date=datetime.datetime.now(),
-            monthly_bills=list(),
-            one_off_expenses=one_off_expenses
+            transactions=self.generate_one_off_expenses()
         )
         self.assertEqual(expected_total_one_off_expenses, budget.calculate_total_one_off_expenses())
 
@@ -64,8 +62,7 @@ class TestBudget(unittest.TestCase):
         budget = Budget(
             current_balance=current_balance,
             end_date=datetime.datetime.now() + datetime.timedelta(days=90),
-            monthly_bills=self.generate_monthly_bills(),
-            one_off_expenses=self.generate_one_off_expenses()
+            transactions=self.generate_one_off_expenses() + self.generate_monthly_bills()
         )
         self.assertEqual(current_balance - 800 - 1290, budget.calculate_remaining_balance())
 
