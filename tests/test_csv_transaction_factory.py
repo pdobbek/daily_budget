@@ -6,11 +6,12 @@ class TestCSVTransactionFactory(unittest.TestCase):
 
     def test_create_transaction(self):
         factory = CSVTransactionFactory()
-        data = {'name': 'Test Transaction', 'amount': '100.00', 'day': '15'}
+        data = {'name': 'Test Transaction', 'amount': '100.00', 'day': '15', 'currency': 'GBP'}
         transaction = factory.create_transaction(data)
         self.assertEqual(transaction.name, 'Test Transaction')
         self.assertEqual(transaction.amount, 100.00)
         self.assertEqual(transaction.day, 15)
+        self.assertEqual(transaction.currency, 'GBP')
 
     def test_load_transactions_from_csv(self):
         factory = CSVTransactionFactory()

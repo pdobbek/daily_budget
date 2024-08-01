@@ -1,7 +1,7 @@
-name,amount,day
-Accom.,300,15
-Gym,30,15
-Phone,30,15
-Subs.,20,15
-Air ticket,700,
-Concert,100,
+name,amount,day,currency
+Accom.,300,15,GBP
+Gym,30,15,
+Phone,30,15,
+Subs.,20,15,
+Air ticket,700,,
+Concert,100,,

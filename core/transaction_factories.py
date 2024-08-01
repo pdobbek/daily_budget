@@ -10,7 +10,8 @@ class TransactionFactory(ABC):
         return Transaction(
             name=data['name'],
             amount=float(data['amount']),
-            day=int(data['day']) if data['day'] else None
+            day=int(data['day']) if data['day'] else None,
+            currency=data['currency'] if data['currency'] else 'GBP'
         )
 
 
