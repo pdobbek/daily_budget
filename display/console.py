@@ -5,9 +5,30 @@ from core.transaction import Transaction
 from core.transaction_factories import CSVTransactionFactory
 
 
+def after_budget_created_choice(budget):
+    while True:
+        options = ("Change budget amount (a)"
+                   "\nChange budget duration (d)"
+                   "\nSave budget (s)"
+                   "\nCancel (c)")
+        choice = get_user_input(options)
+        if choice == 'a':
+            change_budget_amount(budget)
+        elif choice == 'd':
+            change_budget_duration(budget)
+        elif choice == 's':
+            # TODO: implement saving the budget
+            print("Saving budget is not yet implemented.")
+        elif choice == 'c':
+            pass
+        else:
+            print("Invalid choice.")
+
+
 def get_user_input(prompt):
     """Gets user input from the console."""
-    return input(prompt)
+    print(prompt, end="")
+    return input("\n> ")
 
 
 def get_transaction_data(manual_input=True):
@@ -70,20 +91,7 @@ def main():
         if choice == 'n':
             budget = create_budget()
             display_budget(budget)
-            n_choice = get_user_input("Would you like to save the budget? (y/n) ").lower()
-            if n_choice == 'y':
-                # TODO: Implement saving the budget
-                print("Saving budget is not yet implemented.")
-            while True:
-                change_choice = get_user_input("\nChange budget duration (d)\nChange budget amount (a)\n\nContinue (y) ").lower()
-                if change_choice == 'd':
-                    change_budget_duration(budget)
-                elif change_choice == 'a':
-                    change_budget_amount(budget)
-                elif change_choice == 'y':
-                    break
-                else:
-                    print("Invalid choice.")
+            after_budget_created_choice(budget)
         elif choice == 'd':
             # TODO: Implement loading a saved budget
             print("Loading saved budget is not yet implemented.")

@@ -48,9 +48,10 @@ class Budget:
 
     def __str__(self):
         return (f"Current balance: {self.current_balance}\n"
+                f"End date: {self.end_date}\n---\n"
                 f"One-off expenses (total): {self.calculate_total_one_off_expenses()}\n"
                 f"Monthly bills (monthly): {sum(bill.amount for bill in self.monthly_bills)}\n"
                 f"Monthly bills (total): {self.calculate_total_monthly_bills()}\n"
-                f"Remaining balance: {self.calculate_remaining_balance()}\n"
+                f"Remaining balance: {self.calculate_remaining_balance()}\n---\n"
                 f"Daily budget: {self.calculate_daily_budget()}")
 
