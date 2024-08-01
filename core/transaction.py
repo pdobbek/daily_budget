@@ -10,10 +10,14 @@ class Transaction:
 
     @staticmethod
     def convert_to_gbp(amount: float, currency: str) -> float:
+        """Converts an amount from one currency to another.
+        :raise: NotImplemented
+        :raise: HTTPError
+        """
         if currency == "GBP":
             return amount
         elif currency != "EUR":
-            raise NotImplemented
+            raise NotImplementedError("Unsupported or invalid currency")
 
         url = "https://api.exchangerate-api.com/v4/latest/EUR"
         response = requests.get(url)
